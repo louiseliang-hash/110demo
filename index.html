@@ -29,4 +29,114 @@
         .video-placeholder { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
 
         /* 文字對話層 (Overlay) */
-        #textChat { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index:
+        #textChat { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; display: none; flex-direction: column; padding: 20px; }
+        .quick-option { background: #ff3b30; color: white; border: none; padding: 15px; border-radius: 10px; margin-bottom: 10px; font-weight: bold; cursor: pointer; font-size: 15px; }
+        
+        /* 彈窗 */
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index: 200; }
+        .popup { background: white; width: 280px; border-radius: 15px; overflow: hidden; text-align: center; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="phone-container">
+    
+    <div id="p1" class="page active">
+        <div class="header">內政部警政署 110</div>
+        <div class="line-chat-bg">
+            <div class="msg-left">您好，請問需要什麼服務？</div>
+        </div>
+        <div style="padding:15px; display:flex; gap:10px; border-top:1px solid #ddd; background: white;">
+            <input type="text" value="110" readonly style="flex-grow:1; border:1px solid #ccc; padding:8px; border-radius:5px; font-size:14px;">
+            <button onclick="showPage('p2')" style="background:var(--line-green); color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">發送</button>
+        </div>
+    </div>
+
+    <div id="p2" class="page">
+        <div class="header">內政部警政署 110</div>
+        <div class="line-chat-bg">
+            <div class="msg-right">110</div>
+            <div class="oa-card">
+                <div style="padding:15px; font-size:13px; color:#333;">您好，如需視訊報案請點擊下方按鈕啟動連線。</div>
+                <div class="oa-btn" onclick="showPage('p3')">啟動視訊報案 LIFF</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="p3" class="page" style="justify-content:center; align-items:center; background: white;">
+        <img src="https://img.icons8.com/color/96/police-badge.png" width="80">
+        <div style="margin-top:20px; font-weight:bold; color:#333;">110 視訊報案系統</div>
+        <div style="color:#999; font-size:12px; margin-top:10px;">安全連線建立中...</div>
+    </div>
+
+    <div id="p4" class="page" style="background: white;">
+        <div class="overlay">
+            <div class="popup">
+                <div style="padding:20px;">
+                    <div style="font-weight:bold; margin-bottom:10px;">想存取您的位置</div>
+                    <div style="font-size:13px; color:#666;">系統將自動偵測所在地，以派遣鄰近警力前往。</div>
+                </div>
+                <div style="display:flex; border-top:1px solid #eee;">
+                    <div style="flex:1; padding:12px; color:#007bff; border-right:1px solid #eee;">拒絕</div>
+                    <div style="flex:1; padding:12px; color:#007bff; font-weight:bold; cursor:pointer;" onclick="showPage('p5')">允許</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="p5" class="page police-page">
+        <div class="header" style="background: var(--police-dark);">視訊報案準備</div>
+        <div style="padding-top: 50px;">
+            <div style="font-size:1.2rem; font-weight:bold;">台北市政府警察局</div>
+            <div style="color:var(--line-green); margin-top:10px; font-size:13px;">● GPS 定位已鎖定</div>
+            <button onclick="showPage('p6')" style="width:80px; height:80px; background:#ff3b30; border-radius:50%; border:none; margin:40px auto; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow: 0 0 20px rgba(255,59,48,0.5);">
+                <img src="https://img.icons8.com/ios-filled/35/white/phone.png">
+            </button>
+            <div style="font-weight:bold;">點擊「開始視訊」</div>
+        </div>
+    </div>
+
+    <div id="p6" class="page police-page">
+        <div class="header" style="background: var(--police-dark);">110 視訊通話中</div>
+        <div class="video-view">
+            <div style="position: absolute; top: 10px; right: 10px; width: 80px; height: 110px; background: #555; border: 2px solid #fff; border-radius: 10px; z-index: 10; display:flex; align-items:center; justify-content:center; font-size:10px;">您的影像</div>
+            <img class="video-placeholder" src="https://images.unsplash.com/photo-1590103512238-3354f5ee8903?auto=format&fit=crop&w=500&q=80">
+
+            <div id="textChat">
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <button onclick="closeTextChat()" style="background:none; border:none; color:white; font-size:24px;">✕</button>
+                </div>
+                <div style="background: #fff; color: #333; padding: 12px; border-radius: 10px; margin-bottom: 20px; text-align: left; font-size: 14px;">不方便講話？請點選狀況告知警方：</div>
+                <button class="quick-option" onclick="sendQuickMsg('我遇到闖空門無法講話')">⚠️ 我遇到闖空門無法講話</button>
+                <button class="quick-option" onclick="sendQuickMsg('我被綁架了')">🚨 我被綁架了</button>
+                <div id="sentStatus" style="color:var(--line-green); font-size:13px; margin-top:10px; display:none;">✓ 訊息已加密傳送</div>
+            </div>
+        </div>
+        <div style="background:var(--police-dark); padding: 15px;">
+            <button onclick="openTextChat()" style="background:#3a3a3c; border:none; border-radius:15px; padding:15px; width:100%; cursor:pointer;">
+                <div style="color:#ff453a; font-weight:bold; margin-bottom:5px;">切換模式</div>
+                <div style="font-size:12px; color:#aeaeb2;">無法講話？點此傳送快訊</div>
+            </button>
+            <button onclick="location.reload()" style="background:none; border:none; color:#666; font-size:11px; margin-top:10px; cursor:pointer;">結束通話</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById(pageId).style.display = 'flex';
+        // 邏輯：載入頁面自動轉定位頁
+        if (pageId === 'p3') setTimeout(function(){ showPage('p4'); }, 1500);
+    }
+    function openTextChat() { document.getElementById('textChat').style.display = 'flex'; }
+    function closeTextChat() { document.getElementById('textChat').style.display = 'none'; }
+    function sendQuickMsg(msg) {
+        document.getElementById('sentStatus').innerText = "✓ 已發送：「" + msg + "」";
+        document.getElementById('sentStatus').style.display = 'block';
+        setTimeout(closeTextChat, 2000);
+    }
+</script>
+</body>
+</html>
