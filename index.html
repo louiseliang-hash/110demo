@@ -3,56 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>110 視訊報案流程 Demo</title>
+    <title>110 視訊報案流程 Demo (Embed版)</title>
     <style>
-        /* 基本樣式重置 */
         * { box-sizing: border-box; }
         body { 
-            margin: 0; 
-            padding: 0; 
-            background: #2c3e50; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh;
-            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            margin: 0; padding: 0; background: #2c3e50; 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
         }
-
-        /* 關鍵：手機外框容器 */
         .phone-container {
-            width: 360px;
-            height: 640px;
-            background: #fff;
-            border: 12px solid #1a1a1a;
-            border-radius: 40px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 360px; height: 640px; background: #fff; 
+            border: 12px solid #1a1a1a; border-radius: 40px; 
+            position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-
-        /* 頁面切換邏輯 */
         .page { display: none; width: 100%; height: 100%; flex-direction: column; }
         .page.active { display: flex; }
 
-        /* LINE 風格細節 */
-        .header { background: #4E6280; color: white; padding: 15px; text-align: center; font-weight: bold; }
+        /* LINE 風格 */
+        .header { background: #4E6280; color: white; padding: 15px; text-align: center; font-weight: bold; z-index: 10; }
         .line-chat-bg { background: #7494C0; flex-grow: 1; padding: 10px; display: flex; flex-direction: column; }
-        .msg-left { background: #fff; padding: 10px; border-radius: 10px; margin-bottom: 10px; align-self: flex-start; font-size: 14px; max-width: 80%; }
-        .msg-right { background: #85E249; padding: 10px; border-radius: 10px; margin-bottom: 10px; align-self: flex-end; font-size: 14px; }
+        .msg-left { background: #fff; padding: 10px; border-radius: 10px; margin-bottom: 10px; align-self: flex-start; font-size: 14px; max-width: 80%; color: #333; }
+        .msg-right { background: #85E249; padding: 10px; border-radius: 10px; margin-bottom: 10px; align-self: flex-end; font-size: 14px; color: #333; }
         .oa-card { background: #fff; border-radius: 10px; overflow: hidden; width: 220px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .oa-btn { padding: 10px; text-align: center; color: #007bff; border-top: 1px solid #eee; cursor: pointer; font-weight: bold; }
 
-        /* 報案通話頁面 */
-        .police-page { background: #1c1c1e; color: white; text-align: center; padding-top: 60px; }
+        /* 視訊頁面樣式 */
+        .police-page { background: #1c1c1e; color: white; text-align: center; }
+        .video-embed-container {
+            flex-grow: 1; width: 100%; background: #000; position: relative;
+        }
+        iframe { width: 100%; height: 100%; border: none; }
+        
+        /* 撥號按鈕樣式 */
+        .dial-area { padding: 40px 20px; }
         .btn-call { 
             width: 80px; height: 80px; background: #ff3b30; border-radius: 50%; 
             display: flex; justify-content: center; align-items: center; 
-            margin: 40px auto; border: none; cursor: pointer;
+            margin: 20px auto; border: none; cursor: pointer;
             box-shadow: 0 0 20px rgba(255,59,48,0.5);
         }
 
-        /* 彈窗樣式 */
-        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; }
+        /* 彈窗 */
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index: 100; }
         .popup { background: white; width: 280px; border-radius: 15px; overflow: hidden; text-align: center; color: #333; }
     </style>
 </head>
@@ -65,7 +57,7 @@
         <div class="line-chat-bg">
             <div class="msg-left">您好，請問需要什麼服務？</div>
         </div>
-        <div style="padding:15px; display:flex; gap:10px; border-top:1px solid #ddd;">
+        <div style="padding:15px; display:flex; gap:10px; border-top:1px solid #ddd; background: white;">
             <div style="flex-grow:1; border:1px solid #ccc; padding:8px; border-radius:5px; color:#999; font-size:14px;">請輸入 110...</div>
             <button onclick="showPage('p2')" style="background:#00b900; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">發送</button>
         </div>
@@ -82,13 +74,13 @@
         </div>
     </div>
 
-    <div id="p3" class="page" style="justify-content:center; align-items:center;">
+    <div id="p3" class="page" style="justify-content:center; align-items:center; background: white;">
         <img src="https://img.icons8.com/color/96/police-badge.png" width="80">
         <div style="margin-top:20px; font-weight:bold; color:#333;">110 視訊報案系統</div>
         <div style="color:#999; font-size:12px; margin-top:10px;">加密連線建立中...</div>
     </div>
 
-    <div id="p4" class="page">
+    <div id="p4" class="page" style="background: white;">
         <div class="overlay">
             <div class="popup">
                 <div style="padding:20px;">
@@ -96,7 +88,7 @@
                     <div style="font-size:13px; color:#666;">系統將自動偵測所在地，以派遣鄰近警力前往。</div>
                 </div>
                 <div style="display:flex; border-top:1px solid #eee;">
-                    <div style="flex:1; padding:12px; color:#007bff; border-right:1px solid #eee;">拒絕</div>
+                    <div style="flex:1; padding:12px; color:#007bff; border-right:1px solid #eee; cursor:pointer;">拒絕</div>
                     <div style="flex:1; padding:12px; color:#007bff; font-weight:bold; cursor:pointer;" onclick="showPage('p5')">允許</div>
                 </div>
             </div>
@@ -104,13 +96,16 @@
     </div>
 
     <div id="p5" class="page police-page">
-        <div style="font-size:1.2rem; font-weight:bold;">台北市政府警察局</div>
-        <div style="color:#00b900; margin-top:10px; font-size:13px;">● GPS 定位完成</div>
-        <button class="btn-call" onclick="window.open('https://liff.line.me/2008742005-3DHkWzkg','_blank')">
-            <img src="https://img.icons8.com/ios-filled/40/white/phone.png">
-        </button>
-        <div style="font-weight:bold;">點擊撥打視訊電話</div>
-        <div style="margin-top:auto; padding:30px 20px;">
+        <div class="header" style="background: #1c1c1e;">視訊報案受理中</div>
+        <div class="dial-area">
+            <div style="font-size:1.2rem; font-weight:bold;">台北市政府警察局</div>
+            <div style="color:#00b900; margin-top:10px; font-size:13px;">● GPS 定位完成</div>
+            <button class="btn-call" onclick="startVideo()">
+                <img src="https://img.icons8.com/ios-filled/40/white/phone.png">
+            </button>
+            <div style="font-weight:bold;">點擊「開始視訊」</div>
+        </div>
+        <div style="margin-top:auto; padding:20px;">
             <div style="background:#3a3a3c; padding:15px; border-radius:10px;">
                 <div style="color:#ff453a; font-weight:bold; margin-bottom:5px;">切換模式</div>
                 <div style="font-size:12px; color:#aeaeb2;">可視訊但無法講話模式</div>
@@ -118,22 +113,35 @@
         </div>
     </div>
 
+    <div id="p6" class="page police-page">
+        <div class="header" style="background: #1c1c1e;">視訊通話中...</div>
+        <div class="video-embed-container">
+            <iframe id="videoFrame" src="" allow="camera;microphone"></iframe>
+        </div>
+        <div style="background: #1c1c1e; padding: 15px;">
+            <button onclick="showPage('p5')" style="background:#ff3b30; color:white; border:none; padding:10px 20px; border-radius:20px; cursor:pointer; font-weight:bold;">結束通話</button>
+        </div>
+    </div>
+
 </div>
 
 <script>
     function showPage(pageId) {
-        // 隱藏所有頁面
         var pages = document.getElementsByClassName('page');
         for (var i = 0; i < pages.length; i++) {
             pages[i].style.display = 'none';
         }
-        // 顯示目標頁
         document.getElementById(pageId).style.display = 'flex';
         
-        // 邏輯：進入步驟 3 後 1.5 秒自動跳步驟 4
         if (pageId === 'p3') {
             setTimeout(function() { showPage('p4'); }, 1500);
         }
+    }
+
+    function startVideo() {
+        // 設定 iframe 網址並顯示頁面
+        document.getElementById('videoFrame').src = "https://liff.line.me/2008742005-3DHkWzkg";
+        showPage('p6');
     }
 </script>
 
