@@ -1,1 +1,120 @@
-<!DOCTYPE html><html lang="zh-Hant"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>110 ���T���׬y�{ Demo</title>    <style>        :root { --line-green: #00b900; --line-blue: #7494C0; --police-dark: #1c1c1e; }        body { font-family: -apple-system, sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }                /* ��������~�� */        .phone-frame { width: 360px; height: 640px; background: white; border: 12px solid #1a1a1a; border-radius: 40px; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }        .page { display: none; width: 100%; height: 100%; flex-direction: column; animation: fadeIn 0.3s ease; }        .page.active { display: flex; }        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }        /* �U�������� */        .line-bg { background: var(--line-blue); }        .header { background: #4E6280; color: white; padding: 15px; text-align: center; font-weight: bold; }        .police-dark-bg { background: var(--police-dark); color: white; text-align: center; padding-top: 50px; }        /* ���s�P���� */        .msg-left { background: white; padding: 10px 15px; border-radius: 15px; margin: 10px; align-self: flex-start; max-width: 70%; font-size: 14px; }        .msg-right { background: #85E249; padding: 10px 15px; border-radius: 15px; margin: 10px; align-self: flex-end; font-size: 14px; }        .oa-card { background: white; border-radius: 12px; width: 220px; margin: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }        .btn-action { background: #f8f9fa; padding: 12px; text-align: center; color: #007bff; border-top: 1px solid #eee; cursor: pointer; font-weight: bold; }        .btn-call { width: 90px; height: 90px; background: #ff3b30; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; border: none; margin: 40px auto; box-shadow: 0 0 20px rgba(255,59,48,0.4); }        /* �u�� */        .modal-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; }        .modal { background:white; width:280px; border-radius:15px; text-align:center; overflow:hidden; }    </style></head><body><div class="phone-frame">        <div id="step1" class="page active line-bg">        <div class="header">���F��ĵ�F�p 110</div>        <div style="flex-grow:1; display:flex; flex-direction:column; padding:10px;">            <div class="msg-left">�z�n�A�аݻݭn����A�ȡH</div>        </div>        <div style="background:white; padding:15px; display:flex; gap:10px;">            <div style="flex-grow:1; border:1px solid #ddd; padding:8px; border-radius:5px; color:#999;">�п�J 110...</div>            <button onclick="nextStep(2)" style="background:var(--line-green); color:white; border:none; padding:8px 15px; border-radius:5px;">�o�e</button>        </div>    </div>    <div id="step2" class="page line-bg">        <div class="header">���F��ĵ�F�p 110</div>        <div style="flex-grow:1; display:flex; flex-direction:column; padding:10px;">            <div class="msg-right">110</div>            <div class="oa-card">                <div style="padding:15px; font-size:14px;">�z�n�A�p�ݵ��T���׽��I���U����s�Ұʳs�u�C</div>                <div class="btn-action" onclick="nextStep(3)">�Ұʵ��T���� LIFF</div>            </div>        </div>    </div>    <div id="step3" class="page" style="background:white; justify-content:center; align-items:center;">        <img src="https://img.icons8.com/color/96/police-badge.png" width="80">        <div style="margin-top:20px; font-weight:bold;">110 ���T���רt��</div>        <div style="color:#999; font-size:14px; margin-top:10px;">���b�إߥ[�K�w���s�u...</div>    </div>    <div id="step4" class="page" style="background:white;">        <div class="modal-overlay">            <div class="modal">                <div style="padding:20px;">                    <div style="font-weight:bold; margin-bottom:10px;">�Q�s���z����m</div>                    <div style="font-size:13px; color:#666;">�t�αN�۰ʰ����Ҧb�a�A�H�����F��ĵ�O�e���C</div>                </div>                <div style="display:flex; border-top:1px solid #eee;">                    <div style="flex:1; padding:12px; color:#007bff; border-right:1px solid #eee;">�ڵ�</div>                    <div style="flex:1; padding:12px; color:#007bff; font-weight:bold; cursor:pointer;" onclick="nextStep(5)">���\</div>                </div>            </div>        </div>    </div>    <div id="step5" class="page police-dark-bg">        <div style="font-size:1.4rem; font-weight:bold;">�x�_���F��ĵ�</div>        <div style="color:var(--line-green); margin-top:10px; font-size:14px;">�� GPS �w��w����</div>                <button class="btn-call" onclick="window.open('https://liff.line.me/2008742005-3DHkWzkg','_blank')">            <img src="https://img.icons8.com/ios-filled/50/white/phone.png">        </button>                <div style="font-weight:bold;">�I���������T�q��</div>        <div style="margin-top:auto; padding:30px 20px;">            <div style="background:#3a3a3c; padding:15px; border-radius:15px;">                <div style="color:#ff453a; font-weight:bold; margin-bottom:5px;">�����Ҧ�</div>                <div style="font-size:13px; color:#aeaeb2;">�i���T���L�k���ܼҦ�</div>            </div>            <p style="font-size:10px; color:#636366; margin-top:15px;">�޳N�䴩: LINE Planet Cloud (SDK + Mobile Push)</p>        </div>    </div></div><script>    function nextStep(step) {        // ���éҦ�����        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));        // ��ܫ��w����        const target = document.getElementById('step' + step);        target.classList.add('active');        // �p�G�O�B�J 3�A�۰ʦb 1.5 �������B�J 4        if (step === 3) {            setTimeout(() => nextStep(4), 1500);        }    }</script></body></html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>110 視訊報案流程 Demo</title>
+    <style>
+        :root { --line-green: #00b900; --line-blue: #7494C0; --police-dark: #1c1c1e; }
+        body { font-family: -apple-system, sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        
+        /* 模擬手機外框 */
+        .phone-frame { width: 360px; height: 640px; background: white; border: 12px solid #1a1a1a; border-radius: 40px; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .page { display: none; width: 100%; height: 100%; flex-direction: column; animation: fadeIn 0.3s ease; }
+        .page.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 各頁面風格 */
+        .line-bg { background: var(--line-blue); }
+        .header { background: #4E6280; color: white; padding: 15px; text-align: center; font-weight: bold; }
+        .police-dark-bg { background: var(--police-dark); color: white; text-align: center; padding-top: 50px; }
+
+        /* 按鈕與元件 */
+        .msg-left { background: white; padding: 10px 15px; border-radius: 15px; margin: 10px; align-self: flex-start; max-width: 70%; font-size: 14px; }
+        .msg-right { background: #85E249; padding: 10px 15px; border-radius: 15px; margin: 10px; align-self: flex-end; font-size: 14px; }
+        .oa-card { background: white; border-radius: 12px; width: 220px; margin: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-action { background: #f8f9fa; padding: 12px; text-align: center; color: #007bff; border-top: 1px solid #eee; cursor: pointer; font-weight: bold; }
+        .btn-call { width: 90px; height: 90px; background: #ff3b30; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; border: none; margin: 40px auto; box-shadow: 0 0 20px rgba(255,59,48,0.4); }
+
+        /* 彈窗 */
+        .modal-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; }
+        .modal { background:white; width:280px; border-radius:15px; text-align:center; overflow:hidden; }
+    </style>
+</head>
+<body>
+
+<div class="phone-frame">
+    
+    <div id="step1" class="page active line-bg">
+        <div class="header">內政部警政署 110</div>
+        <div style="flex-grow:1; display:flex; flex-direction:column; padding:10px;">
+            <div class="msg-left">您好，請問需要什麼服務？</div>
+        </div>
+        <div style="background:white; padding:15px; display:flex; gap:10px;">
+            <div style="flex-grow:1; border:1px solid #ddd; padding:8px; border-radius:5px; color:#999;">請輸入 110...</div>
+            <button onclick="nextStep(2)" style="background:var(--line-green); color:white; border:none; padding:8px 15px; border-radius:5px;">發送</button>
+        </div>
+    </div>
+
+    <div id="step2" class="page line-bg">
+        <div class="header">內政部警政署 110</div>
+        <div style="flex-grow:1; display:flex; flex-direction:column; padding:10px;">
+            <div class="msg-right">110</div>
+            <div class="oa-card">
+                <div style="padding:15px; font-size:14px;">您好，如需視訊報案請點擊下方按鈕啟動連線。</div>
+                <div class="btn-action" onclick="nextStep(3)">啟動視訊報案 LIFF</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="step3" class="page" style="background:white; justify-content:center; align-items:center;">
+        <img src="https://img.icons8.com/color/96/police-badge.png" width="80">
+        <div style="margin-top:20px; font-weight:bold;">110 視訊報案系統</div>
+        <div style="color:#999; font-size:14px; margin-top:10px;">正在建立加密安全連線...</div>
+    </div>
+
+    <div id="step4" class="page" style="background:white;">
+        <div class="modal-overlay">
+            <div class="modal">
+                <div style="padding:20px;">
+                    <div style="font-weight:bold; margin-bottom:10px;">想存取您的位置</div>
+                    <div style="font-size:13px; color:#666;">系統將自動偵測所在地，以派遣鄰近警力前往。</div>
+                </div>
+                <div style="display:flex; border-top:1px solid #eee;">
+                    <div style="flex:1; padding:12px; color:#007bff; border-right:1px solid #eee;">拒絕</div>
+                    <div style="flex:1; padding:12px; color:#007bff; font-weight:bold; cursor:pointer;" onclick="nextStep(5)">允許</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="step5" class="page police-dark-bg">
+        <div style="font-size:1.4rem; font-weight:bold;">台北市政府警察局</div>
+        <div style="color:var(--line-green); margin-top:10px; font-size:14px;">● GPS 定位已完成</div>
+        
+        <button class="btn-call" onclick="window.open('https://liff.line.me/2008742005-3DHkWzkg','_blank')">
+            <img src="https://img.icons8.com/ios-filled/50/white/phone.png">
+        </button>
+        
+        <div style="font-weight:bold;">點擊撥打視訊電話</div>
+
+        <div style="margin-top:auto; padding:30px 20px;">
+            <div style="background:#3a3a3c; padding:15px; border-radius:15px;">
+                <div style="color:#ff453a; font-weight:bold; margin-bottom:5px;">切換模式</div>
+                <div style="font-size:13px; color:#aeaeb2;">可視訊但無法講話模式</div>
+            </div>
+            <p style="font-size:10px; color:#636366; margin-top:15px;">技術支援: LINE Planet Cloud (SDK + Mobile Push)</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function nextStep(step) {
+        // 隱藏所有頁面
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // 顯示指定頁面
+        const target = document.getElementById('step' + step);
+        target.classList.add('active');
+
+        // 如果是步驟 3，自動在 1.5 秒後跳到步驟 4
+        if (step === 3) {
+            setTimeout(() => nextStep(4), 1500);
+        }
+    }
+</script>
+
+</body>
+</html>
+
+這段是對的嗎
